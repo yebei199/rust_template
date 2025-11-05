@@ -1,0 +1,11 @@
+[package]
+name = "my_lib_1"
+rust-version.workspace = true
+version.workspace = true
+edition.workspace = true
+
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
