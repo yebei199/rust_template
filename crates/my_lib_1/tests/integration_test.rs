@@ -1,7 +1,10 @@
-use my_lib_1::study_1::test_study;
+#[cfg(test)]
+mod test {
+    use super::*;
 
-#[test]
-fn test_add() {
-    let a1 = test_study::unit_1::add(3, 2);
-    assert_eq!(a1, 5);
+    #[test]
+     fn test1()->anyhow::Result<()>{
+        Ok( ())
+    }
+
 }

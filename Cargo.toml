@@ -4,16 +4,32 @@ default-members = ["crates/my_lib_1"]
 resolver = "2"
 
 [workspace.package]
-rust-version = "1.91.0"
+rust-version = "1.92"
 version = "0.1.1"
 edition = "2024"
 
+
 [profile.dev]
-opt-level = 1
+opt-level = 2
 
 # Enable a large amount of optimization in the dev profile for dependencies.
 [profile.dev.package."*"]
-opt-level = 3
+opt-level = 2  # 权衡编译速度与运行速度
+debug = false       # 关键点 B：不生成依赖库的调试符号 (极大减小体积)
+
+[profile.test]
+inherits = "dev"
+
+[profile.test.package."*"]
+opt-level = 2
+debug = false
 
 [workspace.dependencies]
-#my_lib_1 = { path = "crates/my_lib_1" }
+anyhow = "1.0.100"
+tokio = { version = "1.48.0", features = ["full"] }
+chrono = "0.4.42"
+chrono-tz = "0.10.4"
+getset = "0.1.6"
+serde = { version = "1.0", features = ["derive"] }
+futures = "0.3.31"
+
