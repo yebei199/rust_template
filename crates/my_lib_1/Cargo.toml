@@ -10,3 +10,4 @@ path = "src/lib.rs"
 
 [dependencies]
 anyhow = {workspace = true}
+tokio = {workspace = true}
