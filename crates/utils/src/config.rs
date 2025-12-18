@@ -1,1 +1,2 @@
-mod env;
+//! Configuration
+pub mod env;
