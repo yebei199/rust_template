@@ -14,7 +14,7 @@ version = "0.1.1"
 edition = "2024"
 
 [[example]]
-name = "lib1"
+name = "example1"
 path = "example/lib_1.rs"
 
 [dependencies]
@@ -44,3 +44,4 @@ chrono-tz = "0.10.4"
 getset = "0.1.6"
 serde = { version = "1.0", features = ["derive"] }
 futures = "0.3.31"
+dotenvy = "0.15.7"
