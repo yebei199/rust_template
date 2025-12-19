@@ -17,6 +17,13 @@ edition = "2024"
 name = "example1"
 path = "example/lib_1.rs"
 
+[profile.release]
+opt-level = 3           # 优化级别，值越大越优化，3 是最大优化
+debug = true            # 保留调试信息，以便显示完整的错误信息
+split-debuginfo = "packed"  # 如果需要调试符号，可以配置此项
+lto = true              # 开启链接时优化，通常会提高性能
+panic = "unwind"        # 保留堆栈信息，避免panic时直接终止
+
 [dependencies]
 anyhow = { workspace = true }
 tokio = { workspace = true }
