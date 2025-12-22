@@ -29,19 +29,14 @@ anyhow = { workspace = true }
 tokio = { workspace = true }
 
 [profile.dev]
-opt-level = 2
+opt-level = 0
 
-# Enable a large amount of optimization in the dev profile for dependencies.
 [profile.dev.package."*"]
-opt-level = 2
-debug = false
+opt-level = 1           # 所有的依赖库（如 Polars）：稍微优化，防止运行太慢
 
 [profile.test]
-inherits = "dev"
+inherits = "dev"        # test 自动继承上述“自己快编、依赖快跑”的策略
 
-[profile.test.package."*"]
-opt-level = 2
-debug = false
 
 [workspace.dependencies]
 utils = { path = "crates/utils" }
