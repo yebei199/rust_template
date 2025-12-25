@@ -15,9 +15,31 @@ target
 # Contains mutation testing data
 **/mutants.out*/
 
-# RustRover
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+# DO NOT add editor or system-specific files here.
+# Add them to your global gitignore instead in `$XDG_CONFIG_HOME/git/ignore`
+
+# Nix
+result
+result-*
+
+# Devenv
+.devenv*
+
+# Environment variables
+/.env
+/.env.*
+
+# Direnv
+.direnv
+
+# Pre-commit hooks
+/.pre-commit-config.yaml
+
+# Rust
+target/
+
+# JavaScript
+node_modules/
+
+**/.claude/settings.local.json
+.claude
