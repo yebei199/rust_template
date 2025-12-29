@@ -8,8 +8,7 @@ targets = [
 
 # 4. 必备组件：确保团队成员的 IDE 都能正常工作
 components = [
-    "rust-analyzer", # 语法高亮与智能提示
-    "rust-src",      # 标准库源码（跳转查看源码必备）
-    "clippy",        # 代码检查
+    "rust-src", # 标准库源码（跳转查看源码必备）
+    "clippy", # 代码检查
     "rustfmt"        # 代码格式化
 ]
