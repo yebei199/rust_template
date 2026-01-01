@@ -24,10 +24,6 @@ split-debuginfo = "packed"  # 如果需要调试符号，可以配置此项
 lto = true              # 开启链接时优化，通常会提高性能
 panic = "unwind"        # 保留堆栈信息，避免panic时直接终止
 
-[dependencies]
-anyhow = { workspace = true }
-tokio = { workspace = true }
-
 [profile.dev]
 opt-level = 0
 
@@ -37,6 +33,9 @@ opt-level = 1           # 所有的依赖库（如 Polars）：稍微优化，�
 [profile.test]
 inherits = "dev"        # test 自动继承上述“自己快编、依赖快跑”的策略
 
+[dependencies]
+anyhow = { workspace = true }
+tokio = { workspace = true }
 
 [workspace.dependencies]
 utils = { path = "crates/utils" }
