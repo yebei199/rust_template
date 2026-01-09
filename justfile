@@ -12,3 +12,6 @@ release:
 musl_release:
     cargo build --release --target x86_64-unknown-linux-musl
 
+bin_test:
+    target/x86_64-unknown-linux-musl/release/hh
+
