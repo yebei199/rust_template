@@ -2,7 +2,7 @@
   description = "Rust musl build environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -13,10 +13,13 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.pkgsCross.musl64.stdenv.cc
-            pkgs.pkg-config
-            pkgs.sccache
+          nativeBuildInputs = with pkgs; [
+            pkgsCross.musl64.stdenv.cc
+            pkg-config
+            sccache
+            cargo-cross
+            clang
+            cmake
           ];
 
           shellHook = ''
