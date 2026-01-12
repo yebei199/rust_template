@@ -37,8 +37,8 @@ panic = "unwind"        # 保留堆栈信息，避免panic时直接终止
 codegen-units = 1
 
 [dependencies]
-anyhow = { workspace = true }
-tokio = { workspace = true }
+anyhow.workspace = true
+tokio.workspace = true
 
 [workspace.dependencies]
 utils = { path = "crates/utils" }
@@ -55,5 +55,5 @@ futures = "0.3.31"
 dotenvy = "0.15.7"
 log = "0.4.29"
 env_logger = "0.11.8"
-config = {version = "0.15.19",features =[]}
+config = { version = "0.15.19", features = [] }
 
