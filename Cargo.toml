@@ -36,6 +36,9 @@ lto = "thin"              # 开启链接时优化，通常会提高性能
 panic = "unwind"        # 保留堆栈信息，避免panic时直接终止
 codegen-units = 1
 
+[features]
+default = []
+
 [dependencies]
 anyhow.workspace = true
 tokio.workspace = true
