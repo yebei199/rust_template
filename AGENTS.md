@@ -11,6 +11,9 @@
    delivering final
    responses.
 
+3. Deprecate the use of standard print statements in favor of structured
+   logging at the debug level.
+
 ## Code Structure
 
 1. **Function Design**
