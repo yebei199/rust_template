@@ -2,7 +2,10 @@
 
 ## Core Principles
 
-1. **Explicit Over Implicit**
+1. **No mod.rs**
+   Prohibit the use of `mod.rs`. Use folder-named external module files instead (e.g., use `src/core.rs` instead of `src/core/mod.rs`).
+
+2. **Explicit Over Implicit**
    Code intent must be clear and unambiguous. Avoid obscure logic and magic
    behaviors.
 
