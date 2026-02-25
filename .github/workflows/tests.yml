@@ -1,0 +1,55 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare CI environment
+        run: |
+          # Remove mold linker configuration that clang doesn't support
+          sed -i '/link-arg=-fuse-ld=mold/d' .cargo/config.toml
+          # Remove sccache wrapper that's not useful in CI
+          sed -i '/rustc-wrapper = "sccache"/d' .cargo/config.toml
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+# 三层缓存: registry + index + build | 依赖变更时通过 Cargo.lock 自动失效
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Check
+        run: cargo check --all-features
+
+      - name: Clippy
+        run: cargo clippy --all-features -- -D warnings
