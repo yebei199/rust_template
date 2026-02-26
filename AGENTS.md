@@ -1,146 +1,31 @@
-# General Development Standards
+1. 禁用mod.rs,使用文件夹命名的外部模块，如 `src/core.rs` 而非 `src/core/mod.rs`
+2. 语言约定,内部英文思考和执行，仅在最终交付时用中文解释和问询用户
+3. 日志规范,用结构化日志（debug 级别）替代标准 print 语句
+4. 修改代码时同时更新对应的md文档,比如项目结构,同级doc目录下对应的文档, 更新文档时注意压缩信息, 而不是无限制增加细节, 以保持文档的简洁和可读性 
+5. 需求模糊或存在多种实现方案时，必须先征求用户确认,禁止未征询明确指示就做假设或任意修改,重大架构调整或破坏性变更需获得用户同意
+6. 尽量使用高级抽象和语言特性来简化代码,比如trait,迭代器、模式匹配、函数式编程等,以提高代码的表达力和可读性,遵守社区最佳实践和习惯用法
 
-## Core Principles
-
-1. **No mod.rs**
-   Prohibit the use of `mod.rs`. Use folder-named external module files instead (e.g., use `src/core.rs` instead of `src/core/mod.rs`).
-
-2. **Explicit Over Implicit**
-   Code intent must be clear and unambiguous. Avoid obscure logic and magic
-   behaviors.
-
-2. **Language Convention**
-   Think and execute in English, but explain and ask users in Chinese only when
-   delivering final
-   responses.
-
-3. Deprecate the use of standard print statements in favor of structured
-   logging at the debug level.
-
-## Code Structure
-
-1. **Function Design**
-
-- Strictly control function length; each function must be atomic with a single
-  responsibility,
-  recommended max 40 lines
-- Prohibit nesting deeper than 3 levels; prefer Guard Clauses for early returns
-- Follow Single Responsibility Principle
-
-2. **Constants and Configuration**
-
-- Prohibit magic numbers or hardcoded strings in logic code
-- Extract all configuration items, paths, and fixed values outside functions as
-  constants
-
-## Documentation and Comments
-
-1. **Documentation Requirements**
-
-- All public functions, types, and modules must have clear documentation
-  comments
-- Comments should use clear and efficient English
-- Must describe functionality, parameter meanings, return values, and potential
-  error/exception
-  conditions
-- Complex logic requires inline comments explaining design intent
-
-## Error Handling
-
-1. **Error Propagation and Handling**
-
-- Prefer language-idiomatic error propagation mechanisms (e.g., Rust's `?`,
-  Python's exceptions)
-- Prohibit silently catching errors or using empty error handling blocks
-- If assertion of success is required, include clear error descriptions
-
-2. **Input Validation**
-
-- External input data must be validated before processing
-- Boundary conditions must be explicitly handled
-
-## Testing Standards
-
-1. **Test Coverage Requirements**
-
-- Core business logic must include test cases
-- Tests should cover both happy paths and edge cases
-- Test code should not affect production build artifacts
-
-## Security and Performance
-
-1. **Security Controls**
-
-- Default prohibition of unsafe language features (e.g., Rust's `unsafe`)
-- If required, add comments before code explaining safety guarantees
-
-2. **Performance Optimization**
-
-- Avoid unnecessary resource copying and memory allocation
-- Prefer language-efficient abstractions (e.g., iterators over explicit loops)
-
-## Communication and Confirmation
-
-1. **Requirement Clarification**
-
-- When requirements are ambiguous or multiple implementation approaches exist,
-  must ask user for
-  confirmation first
-- Prohibit making assumptions or arbitrary changes without clear instructions
-- For major architectural adjustments or breaking changes, obtain user consent
-  beforehand
-
-## Code Style
-
-1. **Clarity and Readability First Priority**
-
-- Follow language community code formatting standards
-- Variable naming must be semantically clear
-- Maintain clear module structure with appropriate visibility controls
-
----
-
-# Rust Standards
-
-## Error Handling
-
-1. Never use `unwrap()` directly
-2. Prefer `?` operator for error propagation
-3. If assertion is required, use `expect()` with concise error description
-
-## Constants
-
-1. All configuration items, paths, and fixed values should be defined as `const`
-   or `static`
-
-## Documentation
-
-1. Prefer `///` doc comments
-2. Every public or private function, struct field, and enum variant requires
-   clear description of
-   functionality, parameter meanings, and potential Panic conditions
-
-## Idioms and Performance
-
-1. Follow `rustfmt` and `clippy` standards
-2. Variable naming and ownership transfer must follow best practices
-3. Prefer `Iterator` over explicit loops
-4. Avoid unnecessary `Clone`; optimize memory usage in performance-critical
-   scenarios
-
-## Testing
-
-1. Unit tests should be placed in `#[cfg(test)] mod tests` within the same
-   source file
-2. Tests should cover both normal paths and boundary conditions
-
-## Safety
-
-1. Default prohibition of `unsafe` blocks
-2. If required, add comments before the block explaining memory safety
-   guarantees
-
-## Dependencies and Modules
-
-1. Maintain clear module structure with appropriate `pub` visibility control
-
+- 严格控制函数长度，单一职责，不超过 40 行
+- 嵌套不超过 3 层，优先使用提前返回（Guard Clauses）
+- 遵循单一职责原则
+- 禁止魔数或硬编码字符串, 和所有配置项、路径、固定值作为常量定义在函数外 
+- 所有公有函数、类型、模块需有概括性的中文文档注释,讲清楚目的, 只需要包含以下内容：
+设计意图,概括功能、参数
+- 全部rs文件都需添加顶层 `//!` 文档注释,只需要讲清楚设计意图即可, 如果需要详细文档则应该在文件同级目录下创建doc文件夹并放置md文档, 以保持代码文件的简洁
+- 禁止静默捕获错误或空的错误处理块
+- 需要断言成功时，包含清晰的错误描述
+- 处理前必须验证外部输入数据,显式处理边界条件 
+- 核心业务逻辑需包含测试用例,覆盖正常路径和边界情况
+- 默认禁止使用不安全特性（Rust 的 `unsafe`,如必需，添加注释说明安全保证
+- 避免不必要的资源复制和内存分配
+- 优先使用语言高效抽象（迭代器优于显式循环）
+- 遵循语言社区代码格式规范
+- 模块结构清晰，可见性控制恰当
+1. 禁止直接使用 `unwrap()`,必须断言时，使用 `expect()` 并附简明错误描述,除非该函数只能使用unwrap不能使用expect,比如迭代器的next方法, 但这种情况必须在函数文档注释中明确说明该函数只能使用unwrap不能使用expect
+2. 优先使用 `?` 操作符传播错误
+3. 所有配置项、路径、固定值定义为 `const` 或 `static`
+4. 优先使用 `///` 文档注释,每个函数、结构体字段、枚举变量需清晰描述功能、参数
+5. 遵循 `rustfmt` 和 `clippy` 规范
+6. 变量命名和所有权转移遵循最佳实践
+7. 优先用迭代器而非显式循环
+8. 避免不必要的 `Clone`；性能关键场景优化内存使用
