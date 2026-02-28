@@ -1,1 +1,2 @@
-docs/README.md
+# rust_template
+my rust template
